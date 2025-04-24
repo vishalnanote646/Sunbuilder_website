@@ -25,7 +25,6 @@ Git & GitHub – For version control and hosting
 📁 Folder Structure
 sun-builder-portfolio/ │ ├── index.html ├── about.html ├── projects.html ├── contact.html ├── feedback.html ├── thankyou.html ├── css/ │ └── style.css ├── js/ │ └── main.js └── images/ └── [building photos, logos, etc.]
 
-yaml Copy Edit
 
 🚀 How to Run This Project Locally
 Clone the repo:
@@ -49,7 +48,7 @@ Animations and form validation with JavaScript
 
 📩 Contact For suggestions or collaboration, feel free to connect through the contact form in this project.
 
-yaml Copy Edit
+
 
 Would you like me to:
 
