@@ -2,36 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact - Sun Builder</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
+
+  <!-- HEADER -->
   <header class="main-header">
-    <h1>Sun Builder and Developers</h1>
+    <img src="images/sun_logo.png" class="logo">
+
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
         <li><a href="feedback.html">Feedback</a></li>
       </ul>
     </nav>
   </header>
 
-  <section class="contact">
-    <h2>Contact Us</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit">Send</button>
-    </form>
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+
+    <div class="contact-container">
+
+      <!-- LEFT INFO -->
+      <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <p>We’d love to hear from you. Reach out to us for any queries.</p>
+
+        <p>📍 Aurangabad, Maharashtra</p>
+        <p>📞 +91 9876543210</p>
+        <p>📧 sunbuilders@gmail.com</p>
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="contact-form">
+        <form id="contactForm">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <input type="tel" name="phone" placeholder="Your Number" required />
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+
+    </div>
+
   </section>
 
+  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Sun Builder and Developers. All rights reserved.</p>
   </footer>
+
 </body>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyB382OcN9-J-xPiVOb7sFvAZ-y40jk4rg8",
+  authDomain: "hemantproject-1f581.firebaseapp.com",
+  projectId: "hemantproject-1f581",
+  storageBucket: "hemantproject-1f581.firebasestorage.app",
+  messagingSenderId: "280465641269",
+  appId: "1:280465641269:web:3af87d21729257de16867c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Select form
+const form = document.getElementById("contactForm");
+
+// Submit event
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = form.name.value;
+  const email = form.email.value;
+  const phone = form.phone.value;
+
+  try {
+    await addDoc(collection(db, "contacts"), {
+      name,
+      email,
+      phone,
+      createdAt: new Date()
+    });
+
+    alert("✅ Submitted Successfully!");
+    form.reset();
+
+  } catch (error) {
+    alert("❌ Error: " + error.message);
+  }
+});
+</script>
+
+
 </html>

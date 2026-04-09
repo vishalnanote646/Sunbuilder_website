@@ -2,35 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feedback - Sun Builder</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
+
+  <!-- HEADER -->
   <header class="main-header">
-    <h1>Sun Builder and Developers</h1>
+    <img src="images/sun_logo.png" class="logo">
+
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="feedback.html" class="active">Feedback</a></li>
       </ul>
     </nav>
   </header>
 
-  <section class="feedback">
-    <h2>Give Your Feedback</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <textarea placeholder="Your Feedback" required></textarea>
-      <button type="submit">Submit</button>
-    </form>
+  <!-- FEEDBACK SECTION -->
+  <section class="feedback-section">
+
+    <div class="feedback-box">
+
+      <h2>Share Your Experience</h2>
+      <p>Your feedback helps us improve our services</p>
+
+      <form id="feedbackForm">
+
+        <div class="input-group">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="Enter your name" required>
+        </div>
+
+    
+
+        <div class="input-group">
+          <label>Experience</label>
+          <select name="experience">
+            <option>Excellent</option>
+            <option>Good</option>
+            <option>Average</option>
+            <option>Poor</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Feedback</label>
+          <textarea name="message" placeholder="Write your feedback..." required></textarea>
+        </div>
+
+        <button type="submit">Submit Feedback</button>
+
+      </form>
+
+    </div>
+
   </section>
 
+  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Sun Builder and Developers. All rights reserved.</p>
   </footer>
+
 </body>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+// SAME CONFIG (copy same as contact page)
+const firebaseConfig = {
+  apiKey: "AIzaSyB382OcN9-J-xPiVOb7sFvAZ-y40jk4rg8",
+  authDomain: "hemantproject-1f581.firebaseapp.com",
+  projectId: "hemantproject-1f581",
+  storageBucket: "hemantproject-1f581.firebasestorage.app",
+  messagingSenderId: "280465641269",
+  appId: "1:280465641269:web:3af87d21729257de16867c"
+};
+
+// Initialize
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Select form
+const form = document.getElementById("feedbackForm");
+
+// Submit event
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = form.name.value;
+  const experience = form.experience.value;
+  const message = form.message.value;
+
+  try {
+    await addDoc(collection(db, "feedback"), {
+      name,
+      experience,
+      message,
+      createdAt: new Date()
+    });
+
+    alert("✅ Feedback Submitted!");
+    form.reset();
+
+  } catch (error) {
+    alert("❌ Error: " + error.message);
+  }
+});
+</script>
 </html>
